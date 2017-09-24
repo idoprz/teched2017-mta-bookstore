@@ -10,6 +10,8 @@ modules:
   - name: service
     type: java
     path: service
+    parameters:
+      memory: 512M      
     provides:
       - name: service_api
         properties:
