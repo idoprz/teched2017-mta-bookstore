@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>newBookDialogTitle}">
+		<beginButton>
+			<Button text="{i18n>cancelButton}" press="onDialogCancel"/>
+		</beginButton>
+		<endButton>
+			<Button text="Create" type="Emphasized" press="onDialogCreate" enabled="{/canCreate}"/>
+		</endButton>
+		<content>
+			<VBox>
+				<Input type="Text" placeholder="{PL>/bookNamePL}" value="{/data/bookName}" change="onDialogInputChange"/>
+				<Input type="Text" placeholder="{PL>/isbnPL}" value="{/data/isbn}" change="onDialogInputChange"/>
+				<Input type="Text" placeholder="{PL>/authorNamePL}" value="{/data/authorName}" change="onDialogInputChange"/>
+				<Input type="Number" placeholder="{PL>/pricePL}" value="{/data/price}" change="onDialogInputChange"/>
+			</VBox>
+		</content>
+	</Dialog>
+</core:FragmentDefinition> 
