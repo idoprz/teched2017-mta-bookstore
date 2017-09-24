@@ -28,15 +28,6 @@ import com.sap.cloud.sdk.service.prov.api.response.QueryResponse;
 import com.sap.cloud.sdk.service.prov.api.response.ReadResponse;
 
 
-import com.sap.cloud.sdk.service.prov.api.operations.Create;
-import com.sap.cloud.sdk.service.prov.api.operations.Delete;
-import com.sap.cloud.sdk.service.prov.api.request.CreateRequest;
-import com.sap.cloud.sdk.service.prov.api.request.DeleteRequest;
-import com.sap.cloud.sdk.service.prov.api.response.CreateResponse;
-import com.sap.cloud.sdk.service.prov.api.response.DeleteResponse;
-
-import com.sap.cloud.sdk.hana.connectivity.cds.CDSException;
-
 public class StoreService {
 
 	private static Logger logger = LoggerFactory.getLogger(StoreService.class);
@@ -62,19 +53,6 @@ public class StoreService {
 	    }
 	}
 	
-	@Create(entity = "Book", serviceName = "store")
-    public CreateResponse createSalesOrderLineItems(CreateRequest createRequest) {
-        CreateResponse createResponse = CreateResponse.setSuccess().setData(createEntity( createRequest)).response();
-        return createResponse;
-    }
-    
-    @Delete(entity = "Book", serviceName ="store")
-    public DeleteResponse deleteSalesOrder(DeleteRequest deleteRequest) {
-            deleteEntity(deleteRequest);
-            DeleteResponse deleteResponse = DeleteResponse.setSuccess().response();
-        	return deleteResponse;
-    }
-
 	
 	private List<EntityData> getEntitySet(QueryRequest queryRequest) {
 		String fullQualifiedName = queryRequest.getEntityMetadata().getNamespace()+ "." +queryRequest.getEntityMetadata().getName();			
@@ -95,28 +73,7 @@ public class StoreService {
 		EntityData ed = dsHandler.executeRead(readRequest.getEntityMetadata().getName(), readRequest.getKeys(), readRequest.getEntityMetadata().getElementNames());
 		return ed;
 	}
-	
-	 private void deleteEntity(DeleteRequest deleteRequest){
-        CDSDataSourceHandler dsHandler = DataSourceHandlerFactory.getInstance().getCDSHandler(getConnection(), deleteRequest.getEntityMetadata().getNamespace());
-        try{
-            dsHandler.executeDelete(deleteRequest.getEntityMetadata().getName(), deleteRequest.getKeys());
-        } catch (CDSException e){
-            logger.error("Eexception while deleting an entity in CDS: " + e.getMessage());
-        }
-    }
-    
-    
-    private EntityData createEntity(CreateRequest createRequest)
-    {   
-        CDSDataSourceHandler dsHandler = DataSourceHandlerFactory.getInstance().getCDSHandler(getConnection(), createRequest.getEntityMetadata().getNamespace());
-        EntityData ed = null;
-        try{
-            ed = dsHandler.executeInsert(createRequest.getData(), true);
-        } catch (CDSException e){
-            logger.error("Eexception while creating an entity in CDS: " + e.getMessage());
-        }
-        return ed;
-    }
+
 	
 	private static Connection getConnection(){
 		Connection conn = null;
