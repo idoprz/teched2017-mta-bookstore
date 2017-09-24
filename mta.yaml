@@ -1,6 +1,6 @@
 ID: BookStore
 _schema-version: '2.0'
-version: 0.0.1
+version: 0.0.2
 modules:
   - name: db
     type: hdb
@@ -10,6 +10,8 @@ modules:
   - name: service
     type: java
     path: service
+    parameters:
+      memory: 512M    
     provides:
       - name: service_api
         properties:
@@ -34,6 +36,7 @@ modules:
           strictSSL: false
           url: '~{url}'
           name: service_api
+          
 resources:
   - name: hdi_db
     properties:
