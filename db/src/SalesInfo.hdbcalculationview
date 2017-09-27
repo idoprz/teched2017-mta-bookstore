@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="SalesInfo" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="SalesInfo"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="store.Book">
+    <resourceUri>store.Book</resourceUri>
+  </DataSource>
+  <DataSource id="store.BookSales">
+    <resourceUri>store.BookSales</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="bookId">
+        <descriptions defaultDescription="bookId"/>
+      </viewAttribute>
+      <viewAttribute id="bookName">
+        <descriptions defaultDescription="bookName"/>
+      </viewAttribute>
+      <viewAttribute id="price">
+        <descriptions defaultDescription="price"/>
+      </viewAttribute>
+      <viewAttribute id="authorName">
+        <descriptions defaultDescription="authorName"/>
+      </viewAttribute>
+      <viewAttribute id="region">
+        <descriptions defaultDescription="region"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="store.Book">
+      <mapping xsi:type="Calculation:AttributeMapping" target="bookId" source="bookId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="bookName" source="bookName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="price" source="price"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="authorName" source="authorName"/>
+    </input>
+    <input node="store.BookSales">
+      <mapping xsi:type="Calculation:AttributeMapping" target="region" source="region"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="bookId" source="bookId"/>
+    </input>
+    <joinAttribute name="bookId"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="bookName" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="bookName"/>
+      <keyMapping columnObjectName="Join_1" columnName="bookName"/>
+    </attribute>
+    <attribute id="authorName" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="authorName"/>
+      <keyMapping columnObjectName="Join_1" columnName="authorName"/>
+    </attribute>
+    <attribute id="region" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="region"/>
+      <keyMapping columnObjectName="Join_1" columnName="region"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="salesCount" order="1" aggregationType="count" measureType="simple">
+      <descriptions defaultDescription="bookId"/>
+      <measureMapping columnObjectName="Join_1" columnName="bookId"/>
+    </measure>
+    <measure id="totalSalesAmount" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="price"/>
+      <measureMapping columnObjectName="Join_1" columnName="price"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="81" y="226"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="store.Book" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="store.BookSales" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -7,4 +7,10 @@ context store {
             priceCurrency : String(10)  not null;
             authorName    : String(100);
     }
+    
+        /*@@layout{"layoutInfo":{}}*/
+    entity BookSales {
+        bookId : Integer    not null;
+        region : String(10) not null;
+    };
 };

@@ -121,6 +121,8 @@ public class StoreService {
 	private static Connection getConnection(){
 		Connection conn = null;
 		Context ctx;
+		
+		
 		try {
 			ctx = new InitialContext();
 			conn = ((DataSource) ctx.lookup("java:comp/env/jdbc/java-hdi-container")).getConnection();
